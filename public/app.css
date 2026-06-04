@@ -1,0 +1,313 @@
+/* Import Google Fonts (Tajawal & Cairo) */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Tajawal:wght@300;400;500;700;900&display=swap');
+
+:root {
+  --bg-obsidian: #080c14;
+  --bg-slate-dark: #0f172a;
+  --neon-cyan: #00f2fe;
+  --neon-blue: #4facfe;
+  --neon-emerald: #10b981;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --font-body: 'Tajawal', sans-serif;
+  --font-title: 'Cairo', sans-serif;
+}
+
+/* Global resets & Typography */
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-obsidian);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 700;
+}
+
+/* Ultra-premium Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-obsidian);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--neon-blue), var(--neon-cyan));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--neon-cyan), var(--neon-emerald));
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+}
+
+/* Background Particle Canvas Styling */
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+/* Glassmorphism Design Tokens */
+.glass {
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.glass-hover:hover {
+  background: rgba(15, 23, 42, 0.75);
+  border-color: rgba(0, 242, 254, 0.25);
+  box-shadow: 0 10px 30px -10px rgba(0, 242, 254, 0.15);
+  transform: translateY(-4px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-premium {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(8, 12, 20, 0.8) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+}
+
+/* Glowing Neon Borders and Texts */
+.glow-cyan {
+  text-shadow: 0 0 10px rgba(0, 242, 254, 0.4), 0 0 20px rgba(0, 242, 254, 0.2);
+}
+
+.glow-blue {
+  text-shadow: 0 0 10px rgba(79, 172, 254, 0.4), 0 0 20px rgba(79, 172, 254, 0.2);
+}
+
+.glow-emerald {
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.4), 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.border-glow-cyan:hover {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.35);
+  transition: all 0.3s ease;
+}
+
+.border-glow-blue:hover {
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 15px rgba(79, 172, 254, 0.35);
+  transition: all 0.3s ease;
+}
+
+.border-glow-emerald:hover {
+  border-color: var(--neon-emerald);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.35);
+  transition: all 0.3s ease;
+}
+
+/* Gradient text helpers */
+.gradient-text-cyan-blue {
+  background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-emerald {
+  background: linear-gradient(135deg, #34d399 0%, var(--neon-emerald) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Dynamic Animation Utilities */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; box-shadow: 0 0 25px rgba(0, 242, 254, 0.5); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s infinite ease-in-out;
+}
+
+/* Custom Horizontal/Vertical Timeline for Roadmap */
+.timeline-container {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.timeline-container::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--neon-cyan), var(--neon-blue), transparent);
+  top: 0;
+  bottom: 0;
+  right: 50%;
+  margin-right: -1px;
+}
+
+@media (max-width: 768px) {
+  .timeline-container::after {
+    right: 20px;
+    margin-right: 0;
+  }
+}
+
+.timeline-item {
+  padding: 10px 40px;
+  position: relative;
+  background-color: inherit;
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  .timeline-item {
+    width: 100%;
+    padding-right: 45px;
+    padding-left: 0;
+  }
+}
+
+.timeline-item-left {
+  left: 0;
+}
+
+.timeline-item-right {
+  left: 50%;
+}
+
+@media (max-width: 768px) {
+  .timeline-item-right {
+    left: 0;
+  }
+}
+
+/* Circle marker on the timeline */
+.timeline-marker {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--bg-obsidian);
+  border: 3px solid var(--neon-cyan);
+  top: 25px;
+  z-index: 10;
+  box-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.timeline-item-left .timeline-marker {
+  right: -8px;
+}
+
+.timeline-item-right .timeline-marker {
+  left: -8px;
+}
+
+@media (max-width: 768px) {
+  .timeline-item-left .timeline-marker,
+  .timeline-item-right .timeline-marker {
+    right: 12px;
+    left: auto;
+  }
+}
+
+/* Intersection Observer - Fade In Up Reveal */
+.reveal-element {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal-element.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Smooth fade-in overlay for SPA pages switching */
+.page-section {
+  display: none;
+}
+
+.page-section.active-page {
+  display: block;
+  animation: pageFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Quick utility: Glowing status badge */
+.badge-status {
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-status-planning {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-status-dev {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.badge-status-prod {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--neon-emerald);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Active Nav Links styling */
+.nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-link.active-nav::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-blue));
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--neon-cyan);
+}

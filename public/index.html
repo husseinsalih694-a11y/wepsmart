@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سمارت هورايزن | Smart Horizon - منصة الابتكار العراقي في البرمجيات والذكاء الاصطناعي</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="فريق سمارت هورايزن العراقي المتخصص في تطوير البرمجيات وحلول الذكاء الاصطناعي فائقة الدقة. نبتكر حلولاً رقمية وتطبيقات حديثة برؤية تكنولوجية مستقبلية.">
+  <meta name="keywords" content="سمارت هورايزن, ذكاء اصطناعي العراق, برمجيات العراق, تطوير مواقع بغداد, تطبيقات الهواتف, روبوتات الذكاء الاصطناعي, Smart Horizon Iraq">
+  <meta name="author" content="Smart Horizon Team">
+  <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#080c14',
+            slateDark: '#0f172a',
+            neonCyan: '#00f2fe',
+            neonBlue: '#4facfe',
+            neonEmerald: '#10b981',
+          },
+          fontFamily: {
+            tajawal: ['Tajawal', 'sans-serif'],
+            cairo: ['Cairo', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body class="bg-obsidian text-slate-100 min-h-screen flex flex-col font-tajawal relative antialiased selection:bg-neonCyan/35 selection:text-white">
+
+  <!-- Interactive Canvas background representing neural node connections -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Glowing background blobs for ambient aesthetic -->
+  <div class="fixed top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-neonCyan/10 blur-[150px] pointer-events-none z-[-1] animate-float"></div>
+  <div class="fixed bottom-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-neonBlue/10 blur-[150px] pointer-events-none z-[-1] animate-float" style="animation-delay: -3s;"></div>
+
+  <!-- HEADER / NAVIGATION (Frosted Glassmorphism) -->
+  <header class="sticky top-0 z-40 w-full glass border-b border-white/5 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo & Branding -->
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-neonCyan to-neonBlue flex items-center justify-center shadow-[0_0_20px_rgba(0,242,254,0.4)] animate-pulse-glow">
+            <i class="fa-solid fa-brain text-xl text-white"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xl sm:text-2xl font-black font-cairo tracking-wide bg-gradient-to-l from-white via-slate-100 to-neonCyan bg-clip-text text-transparent">سمارت هورايزن</span>
+            <span class="text-[9px] uppercase tracking-[0.2em] text-neonCyan font-bold">Smart Horizon AI</span>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-8 font-medium">
+          <a href="#home" class="nav-link text-slate-300 hover:text-neonCyan py-2 text-sm transition-all duration-200">الرئيسية</a>
+          <a href="#projects" class="nav-link text-slate-300 hover:text-neonCyan py-2 text-sm transition-all duration-200">مشاريعنا</a>
+          <a href="#team" class="nav-link text-slate-300 hover:text-neonCyan py-2 text-sm transition-all duration-200">أعضاء الفريق</a>
+          <a href="#roadmap" class="nav-link text-slate-300 hover:text-neonCyan py-2 text-sm transition-all duration-200">الرؤية القادمة</a>
+          <a href="#join" class="nav-link text-slate-300 hover:text-neonCyan py-2 text-sm transition-all duration-200">انضم إلينا</a>
+        </nav>
+
+        <!-- CTA Action Buttons -->
+        <div class="flex items-center gap-4">
+          <!-- Admin Panel Shortcut Button -->
+          <a href="#admin" class="relative group hidden sm:inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs font-semibold rounded-lg group bg-gradient-to-br from-neonCyan via-neonBlue to-neonEmerald group-hover:from-neonCyan group-hover:to-neonEmerald text-white focus:ring-4 focus:outline-none focus:ring-neonCyan/30">
+            <span class="relative px-4 py-2 transition-all ease-in duration-75 bg-slateDark/90 rounded-md group-hover:bg-opacity-0 font-cairo">
+              <i class="fa-solid fa-lock-open me-1"></i> لوحة التحكم
+            </span>
+          </a>
+          
+          <!-- Mobile Menu Toggle Button -->
+          <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 focus:outline-none" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars text-2xl"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-dropdown" class="hidden md:hidden glass border-t border-white/5 px-4 pt-2 pb-6 flex flex-col gap-4 animate-fadeIn">
+      <a href="#home" class="mobile-nav-link text-slate-300 hover:text-neonCyan py-2 border-b border-white/5 font-medium transition-all text-start">الصفحة الرئيسية</a>
+      <a href="#projects" class="mobile-nav-link text-slate-300 hover:text-neonCyan py-2 border-b border-white/5 font-medium transition-all text-start">مشاريعنا الفعالة</a>
+      <a href="#team" class="mobile-nav-link text-slate-300 hover:text-neonCyan py-2 border-b border-white/5 font-medium transition-all text-start">فريق الخبراء</a>
+      <a href="#roadmap" class="mobile-nav-link text-slate-300 hover:text-neonCyan py-2 border-b border-white/5 font-medium transition-all text-start">خريطة المستقبل</a>
+      <a href="#join" class="mobile-nav-link text-slate-300 hover:text-neonCyan py-2 border-b border-white/5 font-medium transition-all text-start">بوابة التوظيف</a>
+      <a href="#admin" class="mobile-nav-link text-neonCyan hover:underline py-2 font-bold transition-all text-start"><i class="fa-solid fa-shield me-1"></i> بوابة الإدارة</a>
+    </div>
+  </header>
+
+  <!-- MAIN SPA CONTENT AREA -->
+  <main class="flex-grow z-10">
+
+    <!-- 1. HOME SECTION -->
+    <section id="home" class="page-section active-page pt-10 sm:pt-20 pb-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Hero Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Right side: Hero descriptive copy -->
+          <div class="lg:col-span-7 flex flex-col items-start text-start space-y-6">
+            <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-neonCyan/10 text-neonCyan border border-neonCyan/20 glow-cyan">
+              <i class="fa-solid fa-rocket animate-bounce"></i> إبداع برمجيات عراقي برؤية عالمية
+            </span>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black font-cairo leading-tight text-white">
+              نبتكر اليوم.. <br>
+              <span class="gradient-text-cyan-blue">لنقود آفاق المستقبل التكنولوجي</span>
+            </h1>
+            <p class="text-base sm:text-lg text-slate-400 max-w-xl leading-relaxed">
+              فريق <strong>سمارت هورايزن (Smart Horizon)</strong> هو فريق تقني عراقي رائد يُسخر قوة الذكاء الاصطناعي وهندسة البرمجيات لتصميم حلول ذكية مخصصة وفعالة تحفّز الكفاءات وترتقي بالتحول الرقمي.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+              <a href="#projects" class="px-8 py-4 rounded-xl font-bold font-cairo bg-gradient-to-r from-neonCyan to-neonBlue hover:from-neonBlue hover:to-neonCyan text-slate-900 shadow-[0_0_25px_rgba(0,242,254,0.4)] hover:shadow-[0_0_35px_rgba(0,242,254,0.6)] transform hover:scale-[1.03] transition-all text-center">
+                استكشف مشاريعنا الحية <i class="fa-solid fa-arrow-left ms-2"></i>
+              </a>
+              <a href="#join" class="px-8 py-4 rounded-xl font-bold font-cairo bg-slateDark/60 hover:bg-slateDark border border-white/10 hover:border-neonCyan/40 text-white transition-all text-center">
+                انضم إلى فريق الخبراء
+              </a>
+            </div>
+          </div>
+
+          <!-- Left side: Stunning glowing illustration mockup -->
+          <div class="lg:col-span-5 relative flex justify-center">
+            <div class="w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr from-neonCyan/20 to-neonBlue/30 absolute blur-3xl z-0 animate-pulse"></div>
+            <div class="relative z-10 w-full max-w-sm glass-premium rounded-3xl p-6 border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.8)] animate-float">
+              <!-- Illustrated code card layout -->
+              <div class="flex items-center justify-between pb-4 border-b border-white/5 mb-4">
+                <div class="flex gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                  <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                  <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                </div>
+                <span class="text-xs text-neonCyan font-mono">smart_horizon_ai.py</span>
+              </div>
+              <div class="space-y-4 text-start font-mono text-xs sm:text-sm text-slate-300">
+                <p><span class="text-pink-500">import</span> smart_engine <span class="text-pink-500">as</span> ai</p>
+                <p><span class="text-emerald-400"># تأسيس رؤية العراق الرقمية</span></p>
+                <p>team = ai.DeveloperTeam(name=<span class="text-yellow-400">"Smart Horizon"</span>)</p>
+                <p>team.set_location(<span class="text-yellow-400">"Iraq, Baghdad"</span>)</p>
+                <p>team.skills = [<span class="text-yellow-400">"AI"</span>, <span class="text-yellow-400">"Web"</span>, <span class="text-yellow-400">"Robotics"</span>]</p>
+                <p class="text-purple-400">while <span class="text-white">team.has_passion()</span>:</p>
+                <p class="ps-4 text-neonCyan">team.innovate()</p>
+                <p class="ps-4 text-neonCyan">team.impact_lives()</p>
+              </div>
+              <!-- Glowing AI scanning line -->
+              <div class="w-[90%] h-0.5 bg-gradient-to-r from-transparent via-neonCyan to-transparent absolute top-1/2 left-0 shadow-[0_0_10px_var(--neon-cyan)] animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. STATS SECTION (Interactive counter widget) -->
+        <div class="mt-24 reveal-element">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            
+            <div class="glass p-6 rounded-2xl border-white/5 flex flex-col items-center hover:border-neonCyan/30 transition-all duration-300 group">
+              <div class="w-12 h-12 rounded-xl bg-neonCyan/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-all">
+                <i class="fa-solid fa-chart-line text-neonCyan text-xl"></i>
+              </div>
+              <span class="text-3xl sm:text-4xl font-extrabold font-cairo bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent">15+</span>
+              <span class="text-xs sm:text-sm text-slate-400 mt-2 font-medium">مشاريع وحلول مبرمجة</span>
+            </div>
+
+            <div class="glass p-6 rounded-2xl border-white/5 flex flex-col items-center hover:border-neonBlue/30 transition-all duration-300 group">
+              <div class="w-12 h-12 rounded-xl bg-neonBlue/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-all">
+                <i class="fa-solid fa-users-gear text-neonBlue text-xl"></i>
+              </div>
+              <span class="text-3xl sm:text-4xl font-extrabold font-cairo bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent">8+</span>
+              <span class="text-xs sm:text-sm text-slate-400 mt-2 font-medium">خبراء ومهندسين متفرغين</span>
+            </div>
+
+            <div class="glass p-6 rounded-2xl border-white/5 flex flex-col items-center hover:border-neonEmerald/30 transition-all duration-300 group">
+              <div class="w-12 h-12 rounded-xl bg-neonEmerald/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-all">
+                <i class="fa-solid fa-hourglass-half text-neonEmerald text-xl"></i>
+              </div>
+              <span class="text-3xl sm:text-4xl font-extrabold font-cairo bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent">4000+</span>
+              <span class="text-xs sm:text-sm text-slate-400 mt-2 font-medium">ساعة تطوير وبحث وعمل</span>
+            </div>
+
+            <div class="glass p-6 rounded-2xl border-white/5 flex flex-col items-center hover:border-neonCyan/30 transition-all duration-300 group">
+              <div class="w-12 h-12 rounded-xl bg-neonCyan/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-all">
+                <i class="fa-solid fa-circle-check text-neonCyan text-xl"></i>
+              </div>
+              <span class="text-3xl sm:text-4xl font-extrabold font-cairo bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent">99%</span>
+              <span class="text-xs sm:text-sm text-slate-400 mt-2 font-medium">دقة وموثوقية تشغيل الحلول</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 3. TEAM VISION & OVERVIEW (Feature Grid) -->
+        <div class="mt-32 reveal-element">
+          <div class="text-center space-y-4 mb-16">
+            <h2 class="text-3xl sm:text-4xl font-black font-cairo">قيم فريقنا ورسالتنا التقنية</h2>
+            <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">نعمل بمعايير هندسية عالمية وثقافة مرنة لتحقيق أقصى استفادة من التقدم البرمجي الهائل.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="glass p-8 rounded-3xl border-white/5 hover:border-neonCyan/20 transition-all duration-300 relative group overflow-hidden">
+              <div class="w-14 h-14 rounded-2xl bg-neonCyan/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-all">
+                <i class="fa-solid fa-microchip text-neonCyan text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-bold font-cairo mb-4 text-white">الذكاء الاصطناعي أولاً</h3>
+              <p class="text-slate-400 text-sm leading-relaxed text-start">نقوم بدمج نماذج الذكاء الاصطناعي المتقدمة وتعلم الآلة في كافة الحلول التي نبنيها لتتحول من برمجيات ثابتة إلى أنظمة ذكية ذاتية التعلم والتوجيه.</p>
+              <div class="absolute bottom-0 right-0 w-24 h-24 bg-neonCyan/5 rounded-full blur-xl group-hover:bg-neonCyan/10 transition-all"></div>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="glass p-8 rounded-3xl border-white/5 hover:border-neonBlue/20 transition-all duration-300 relative group overflow-hidden">
+              <div class="w-14 h-14 rounded-2xl bg-neonBlue/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-all">
+                <i class="fa-solid fa-code text-neonBlue text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-bold font-cairo mb-4 text-white">كود برمجي مستقر وآمن</h3>
+              <p class="text-slate-400 text-sm leading-relaxed text-start">نتبنى أفضل منهجيات هندسة البرمجيات العالمية في بناء الأنظمة المعقدة لضمان أداء مستقر وسريع، وأمان متكامل وحماية شاملة لبيانات شركائنا.</p>
+              <div class="absolute bottom-0 right-0 w-24 h-24 bg-neonBlue/5 rounded-full blur-xl group-hover:bg-neonBlue/10 transition-all"></div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="glass p-8 rounded-3xl border-white/5 hover:border-neonEmerald/20 transition-all duration-300 relative group overflow-hidden">
+              <div class="w-14 h-14 rounded-2xl bg-neonEmerald/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-all">
+                <i class="fa-solid fa-users text-neonEmerald text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-bold font-cairo mb-4 text-white">التمكين والتحول الرقمي</h3>
+              <p class="text-slate-400 text-sm leading-relaxed text-start">نسعى لتمكين المؤسسات الحكومية والخاصة والشباب في العراق عبر تزويدهم بحلول تقنية تعيد تعريف إنتاجيتهم وتساعدهم على أتمتة أعمالهم بشكل عصري مذهل.</p>
+              <div class="absolute bottom-0 right-0 w-24 h-24 bg-neonEmerald/5 rounded-full blur-xl group-hover:bg-neonEmerald/10 transition-all"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2. CURRENT PROJECTS SECTION -->
+    <section id="projects" class="page-section py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center space-y-4 mb-16">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-neonBlue/10 text-neonBlue border border-neonBlue/20 glow-blue">
+            مشاريعنا ومخرجاتنا الفعالة
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-black font-cairo text-white">نحول الأفكار إلى حلول ملموسة</h2>
+          <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">استعرض مشاريعنا التي تم تطويرها وتشغيلها بنجاح بأحدث تكنولوجيات العصر وبأعلى معايير الجودة.</p>
+        </div>
+
+        <!-- Projects Grid Container -->
+        <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Rendered dynamically in app.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. TEAM MEMBERS SECTION -->
+    <section id="team" class="page-section py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center space-y-4 mb-16">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-neonEmerald/10 text-neonEmerald border border-neonEmerald/20 glow-emerald">
+            فريق الخبراء المبدعين
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-black font-cairo text-white">العقول المحركة لسمارت هورايزن</h2>
+          <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">فريق تقني عراقي متكامل يجمع بين الخبرة العميقة والشغف اللامحدود بالذكاء الاصطناعي والتطوير.</p>
+        </div>
+
+        <!-- Team Members Grid Container -->
+        <div id="members-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Rendered dynamically in app.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. FUTURE IDEAS / ROADMAP SECTION -->
+    <section id="roadmap" class="page-section py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center space-y-4 mb-16">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-neonCyan/10 text-neonCyan border border-neonCyan/20 glow-cyan">
+            خريطة الابتكارات القادمة
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-black font-cairo text-white">رؤيتنا وما نخطط لتطويره</h2>
+          <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">جدول زمني يستعرض مفاهيم ومشاريع مبتكرة يدرس الفريق تطويرها لتحقيق قفزة نوعية في مجتمعنا الرقمي.</p>
+        </div>
+
+        <!-- Vertical Timeline Roadmap Container -->
+        <div class="timeline-container relative" id="roadmap-timeline">
+          <!-- Rendered dynamically in app.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. JOIN US RECRUITMENT SECTION -->
+    <section id="join" class="page-section py-20">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        
+        <div class="text-center space-y-4 mb-12">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-neonBlue/10 text-neonBlue border border-neonBlue/20 glow-blue">
+            فرص العمل والتوظيف
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-black font-cairo text-white">اصنع المستقبل معنا</h2>
+          <p class="text-slate-400 text-sm sm:text-base">هل أنت مطور طموح أو مهندس ذكاء اصطناعي شغوف؟ انضم إلينا وكن جزءاً من رحلتنا لتشكيل وجه التقنية في العراق.</p>
+        </div>
+
+        <!-- Glass Recruitment Form Card -->
+        <div class="glass-premium rounded-3xl p-8 border-white/10 shadow-2xl relative overflow-hidden">
+          
+          <div id="join-form-container">
+            <form id="recruitment-form" class="space-y-6 text-start" enctype="multipart/form-data">
+              
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                
+                <!-- Name Field -->
+                <div class="flex flex-col space-y-2">
+                  <label for="applicant-name" class="text-sm font-semibold text-slate-300">الاسم الكامل <span class="text-red-500">*</span></label>
+                  <input type="text" id="applicant-name" name="name" required placeholder="أدخل اسمك الثلاثي"
+                    class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neonCyan focus:ring-1 focus:ring-neonCyan text-white placeholder-slate-500 transition-all">
+                </div>
+
+                <!-- Email Field -->
+                <div class="flex flex-col space-y-2">
+                  <label for="applicant-email" class="text-sm font-semibold text-slate-300">البريد الإلكتروني <span class="text-red-500">*</span></label>
+                  <input type="email" id="applicant-email" name="email" required placeholder="name@example.com"
+                    class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neonCyan focus:ring-1 focus:ring-neonCyan text-white placeholder-slate-500 transition-all">
+                </div>
+
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                
+                <!-- Phone Field -->
+                <div class="flex flex-col space-y-2">
+                  <label for="applicant-phone" class="text-sm font-semibold text-slate-300">رقم الهاتف <span class="text-red-500">*</span></label>
+                  <input type="tel" id="applicant-phone" name="phone" required placeholder="07XXXXXXXXX"
+                    class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neonCyan focus:ring-1 focus:ring-neonCyan text-white placeholder-slate-500 transition-all text-start" dir="ltr">
+                </div>
+
+                <!-- Specialization Dropdown -->
+                <div class="flex flex-col space-y-2">
+                  <label for="applicant-spec" class="text-sm font-semibold text-slate-300">التخصص المطلوب <span class="text-red-500">*</span></label>
+                  <select id="applicant-spec" name="specialization" required
+                    class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neonCyan focus:ring-1 focus:ring-neonCyan text-slate-300 transition-all">
+                    <option value="" disabled selected>اختر تخصصك الأساسي</option>
+                    <option value="مهندس ذكاء اصطناعي (AI Engineer)">مهندس ذكاء اصطناعي (AI Engineer)</option>
+                    <option value="مطور ويب متكامل (Full-Stack Web Dev)">مطور ويب متكامل (Full-Stack Web Dev)</option>
+                    <option value="مطور تطبيقات هواتف (Mobile Dev)">مطور تطبيقات هواتف (Mobile Dev)</option>
+                    <option value="مصمم واجهات وتجربة مستخدم (UI/UX)">مصمم واجهات وتجربة مستخدم (UI/UX)</option>
+                    <option value="مهندس جودة وضمان أداء (QA Engineer)">مهندس جودة وضمان أداء (QA Engineer)</option>
+                    <option value="مدير مشاريع تقنية (Technical Project Manager)">مدير مشاريع تقنية (Technical PM)</option>
+                  </select>
+                </div>
+
+              </div>
+
+              <!-- Resume CV Upload (Styled Custom File Dropzone) -->
+              <div class="flex flex-col space-y-2">
+                <label class="text-sm font-semibold text-slate-300">رفع السيرة الذاتية (CV) <span class="text-red-500">*</span></label>
+                <div id="cv-dropzone" class="border-2 border-dashed border-white/10 hover:border-neonCyan/50 rounded-2xl p-6 text-center cursor-pointer transition-all bg-slateDark/20 flex flex-col items-center justify-center space-y-2 group">
+                  <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-500 group-hover:text-neonCyan transition-all"></i>
+                  <span id="cv-label" class="text-sm text-slate-400 group-hover:text-slate-200">اسحب وأفلت السيرة الذاتية هنا أو انقر للتصفح</span>
+                  <span class="text-xs text-slate-600">المسموح به: PDF, DOC, DOCX, PNG (الحد الأقصى 10 ميجابايت)</span>
+                  <input type="file" id="applicant-cv" name="cv" required class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                </div>
+              </div>
+
+              <!-- Error display container -->
+              <div id="recruitment-error" class="hidden glass border-red-500/30 text-red-400 p-4 rounded-xl text-sm flex items-center gap-2 bg-red-500/5">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span id="recruitment-error-msg"></span>
+              </div>
+
+              <!-- Submit button with loading state -->
+              <button type="submit" id="recruitment-submit-btn" class="w-full py-4 rounded-xl font-bold font-cairo bg-gradient-to-r from-neonCyan to-neonBlue text-slate-900 shadow-[0_0_20px_rgba(0,242,254,0.3)] hover:shadow-[0_0_30px_rgba(0,242,254,0.5)] transform hover:scale-[1.01] transition-all flex items-center justify-center gap-2">
+                <span>إرسال طلب الانضمام</span> <i class="fa-solid fa-paper-plane"></i>
+              </button>
+
+            </form>
+          </div>
+
+          <!-- Successful response container -->
+          <div id="join-success-container" class="hidden flex flex-col items-center justify-center py-12 space-y-6 animate-fadeIn">
+            <div class="w-20 h-20 rounded-full bg-neonEmerald/10 border border-neonEmerald/30 flex items-center justify-center shadow-[0_0_25px_rgba(16,185,129,0.3)] text-3xl text-neonEmerald animate-bounce">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 class="text-2xl font-bold font-cairo text-white">تم إرسال طلبك بنجاح!</h3>
+            <p class="text-slate-400 text-center max-w-md leading-relaxed text-sm">
+              أهلاً بك في آفاق سمارت هورايزن. تم استلام بياناتك وسيرتك الذاتية بأمان. سيقوم فريق الموارد البشرية بتقييم طلبك والتواصل معك على البريد الإلكتروني أو الهاتف في أقرب وقت.
+            </p>
+            <button onclick="resetRecruitmentForm()" class="px-6 py-2.5 rounded-lg border border-white/10 hover:border-neonCyan text-sm font-semibold transition-all">
+              إرسال طلب آخر <i class="fa-solid fa-rotate-left ms-1"></i>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. SECURE ADMIN ROUTE PAGE -->
+    <section id="admin" class="page-section py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        
+        <!-- 6a. ADMIN LOGIN FORM GATE -->
+        <div id="admin-login-gate" class="max-w-md mx-auto glass-premium rounded-3xl p-8 border-white/10 shadow-2xl relative overflow-hidden hidden">
+          <div class="flex flex-col items-center space-y-4 mb-8">
+            <div class="w-14 h-14 rounded-2xl bg-neonCyan/10 flex items-center justify-center text-neonCyan text-2xl shadow-[0_0_15px_rgba(0,242,254,0.2)]">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h2 class="text-2xl font-bold font-cairo text-white">تسجيل الدخول الآمن للمشرف</h2>
+            <p class="text-xs text-slate-500">خاص بفريق عمل سمارت هورايزن لإدارة المنصة</p>
+          </div>
+
+          <form id="admin-login-form" class="space-y-6 text-start">
+            
+            <div class="flex flex-col space-y-2">
+              <label for="admin-user" class="text-sm font-semibold text-slate-300">اسم المستخدم</label>
+              <input type="text" id="admin-user" required placeholder="أدخل اسم المشرف"
+                class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neonCyan focus:ring-1 focus:ring-neonCyan text-white placeholder-slate-600 transition-all">
+            </div>
+
+            <div class="flex flex-col space-y-2">
+              <label for="admin-pass" class="text-sm font-semibold text-slate-300">كلمة المرور</label>
+              <input type="password" id="admin-pass" required placeholder="••••••••••••"
+                class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neonCyan focus:ring-1 focus:ring-neonCyan text-white placeholder-slate-600 transition-all">
+            </div>
+
+            <!-- Login validation error message -->
+            <div id="admin-login-error" class="hidden glass border-red-500/20 text-red-400 p-4 rounded-xl text-xs flex items-center gap-2 bg-red-500/5">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              <span id="admin-login-error-msg"></span>
+            </div>
+
+            <button type="submit" class="w-full py-4 rounded-xl font-bold font-cairo bg-gradient-to-r from-neonCyan to-neonBlue text-slate-900 shadow-[0_0_15px_rgba(0,242,254,0.3)] hover:shadow-[0_0_25px_rgba(0,242,254,0.5)] transform hover:scale-[1.01] transition-all">
+              تأكيد الدخول الآمن <i class="fa-solid fa-circle-arrow-left ms-1"></i>
+            </button>
+
+          </form>
+        </div>
+
+        <!-- 6b. FULL ADMIN DASHBOARD -->
+        <div id="admin-dashboard-panel" class="hidden space-y-8 animate-fadeIn text-start">
+          
+          <!-- Top Bar Header with Title and Logout button -->
+          <div class="glass p-6 rounded-2xl border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-xl bg-neonCyan/10 flex items-center justify-center text-neonCyan text-xl">
+                <i class="fa-solid fa-gears"></i>
+              </div>
+              <div>
+                <h2 class="text-2xl font-black font-cairo text-white">لوحة الإدارة الشاملة</h2>
+                <p class="text-xs text-slate-400 mt-1">تعديل وإضافة وحذف المشاريع، الأعضاء، الخطط، واستعراض المتقدمين</p>
+              </div>
+            </div>
+            <button onclick="handleAdminLogout()" class="px-5 py-2.5 rounded-xl border border-red-500/30 text-red-400 hover:bg-red-500/10 text-xs font-semibold flex items-center gap-2 transition-all">
+              تسجيل الخروج <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </button>
+          </div>
+
+          <!-- Tabs Switching Buttons -->
+          <div class="flex border-b border-white/5 gap-2 overflow-x-auto pb-1">
+            <button onclick="switchAdminTab('projects')" id="tab-btn-projects" class="admin-tab-btn px-6 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-white transition-all flex items-center gap-2 whitespace-nowrap">
+              <i class="fa-solid fa-briefcase"></i> المشاريع الحية
+            </button>
+            <button onclick="switchAdminTab('members')" id="tab-btn-members" class="admin-tab-btn px-6 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-white transition-all flex items-center gap-2 whitespace-nowrap">
+              <i class="fa-solid fa-users"></i> أعضاء الفريق
+            </button>
+            <button onclick="switchAdminTab('roadmap')" id="tab-btn-roadmap" class="admin-tab-btn px-6 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-white transition-all flex items-center gap-2 whitespace-nowrap">
+              <i class="fa-solid fa-clock-rotate-left"></i> الخطط والجدول
+            </button>
+            <button onclick="switchAdminTab('submissions')" id="tab-btn-submissions" class="admin-tab-btn px-6 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-white transition-all flex items-center gap-2 whitespace-nowrap">
+              <i class="fa-solid fa-file-invoice"></i> طلبات التوظيف
+              <span id="submissions-count-badge" class="bg-neonCyan/20 text-neonCyan text-[10px] px-2 py-0.5 rounded-full font-bold">0</span>
+            </button>
+          </div>
+
+          <!-- TAB CONTENT SECTIONS -->
+          <div class="mt-6">
+
+            <!-- Tab 1: Current Projects Management -->
+            <div id="admin-tab-projects" class="admin-tab-content space-y-6 hidden">
+              <div class="flex justify-between items-center">
+                <h3 class="text-lg font-bold font-cairo text-white">قائمة المشاريع الحالية</h3>
+                <button onclick="openProjectModal()" class="px-4 py-2 rounded-xl bg-neonCyan text-slate-900 font-bold text-xs flex items-center gap-2 shadow-[0_0_10px_rgba(0,242,254,0.3)] hover:scale-105 transition-all">
+                  إضافة مشروع جديد <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+
+              <!-- Projects Admin Table -->
+              <div class="glass rounded-2xl border-white/5 overflow-hidden">
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm text-right text-slate-300">
+                    <thead class="text-xs uppercase bg-white/5 text-slate-400 border-b border-white/5 font-cairo">
+                      <tr>
+                        <th class="px-6 py-4">صورة المشروع</th>
+                        <th class="px-6 py-4">عنوان المشروع</th>
+                        <th class="px-6 py-4">العلامات (Tags)</th>
+                        <th class="px-6 py-4">وصف مختصر</th>
+                        <th class="px-6 py-4 text-center">إجراءات</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admin-projects-tbody">
+                      <!-- Rendered dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 2: Team Members Management -->
+            <div id="admin-tab-members" class="admin-tab-content space-y-6 hidden">
+              <div class="flex justify-between items-center">
+                <h3 class="text-lg font-bold font-cairo text-white">إدارة كفاءات فريق العمل</h3>
+                <button onclick="openMemberModal()" class="px-4 py-2 rounded-xl bg-neonBlue text-white font-bold text-xs flex items-center gap-2 shadow-[0_0_10px_rgba(79,172,254,0.3)] hover:scale-105 transition-all">
+                  إضافة عضو جديد <i class="fa-solid fa-user-plus"></i>
+                </button>
+              </div>
+
+              <!-- Members Admin Table -->
+              <div class="glass rounded-2xl border-white/5 overflow-hidden">
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm text-right text-slate-300">
+                    <thead class="text-xs bg-white/5 text-slate-400 border-b border-white/5 font-cairo">
+                      <tr>
+                        <th class="px-6 py-4">الصورة</th>
+                        <th class="px-6 py-4">الاسم الكامل</th>
+                        <th class="px-6 py-4">الدور الوظيفي</th>
+                        <th class="px-6 py-4">المهارات</th>
+                        <th class="px-6 py-4 text-center">الترتيب</th>
+                        <th class="px-6 py-4 text-center">إجراءات</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admin-members-tbody">
+                      <!-- Rendered dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 3: Future Ideas Roadmap Management -->
+            <div id="admin-tab-roadmap" class="admin-tab-content space-y-6 hidden">
+              <div class="flex justify-between items-center">
+                <h3 class="text-lg font-bold font-cairo text-white">خطة المشاريع والأفكار القادمة</h3>
+                <button onclick="openIdeaModal()" class="px-4 py-2 rounded-xl bg-neonEmerald text-slate-900 font-bold text-xs flex items-center gap-2 shadow-[0_0_10px_rgba(16,185,129,0.3)] hover:scale-105 transition-all">
+                  إضافة فكرة مستقبلية <i class="fa-solid fa-lightbulb"></i>
+                </button>
+              </div>
+
+              <!-- Roadmap Admin Table -->
+              <div class="glass rounded-2xl border-white/5 overflow-hidden">
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm text-right text-slate-300">
+                    <thead class="text-xs bg-white/5 text-slate-400 border-b border-white/5 font-cairo">
+                      <tr>
+                        <th class="px-6 py-4">العنوان</th>
+                        <th class="px-6 py-4 text-center">الربع السنوي</th>
+                        <th class="px-6 py-4 text-center">حالة التخطيط</th>
+                        <th class="px-6 py-4">وصف الفكرة المعروضة</th>
+                        <th class="px-6 py-4 text-center">إجراءات</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admin-ideas-tbody">
+                      <!-- Rendered dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 4: Recruitment Submissions View -->
+            <div id="admin-tab-submissions" class="admin-tab-content space-y-6 hidden">
+              <div class="flex justify-between items-center">
+                <h3 class="text-lg font-bold font-cairo text-white">مراجعة وفلترة طلبات الانضمام</h3>
+                <!-- Simple filter dropdown -->
+                <select id="applicant-filter-select" onchange="filterApplicants()"
+                  class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-2 text-xs focus:outline-none focus:border-neonCyan text-slate-300 transition-all">
+                  <option value="all">عرض جميع التخصصات</option>
+                  <option value="مهندس ذكاء اصطناعي">ذكاء اصطناعي (AI)</option>
+                  <option value="مطور ويب متكامل">تطوير الويب (Full-Stack)</option>
+                  <option value="مطور تطبيقات هواتف">تطبيقات هواتف (Mobile)</option>
+                  <option value="مصمم واجهات">تصميم (UI/UX)</option>
+                  <option value="مدير مشاريع">إدارة مشاريع</option>
+                </select>
+              </div>
+
+              <!-- Submissions Admin Table -->
+              <div class="glass rounded-2xl border-white/5 overflow-hidden">
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm text-right text-slate-300">
+                    <thead class="text-xs bg-white/5 text-slate-400 border-b border-white/5 font-cairo">
+                      <tr>
+                        <th class="px-6 py-4">الاسم الكامل</th>
+                        <th class="px-6 py-4">التخصص الرئيسي</th>
+                        <th class="px-6 py-4">البريد الإلكتروني</th>
+                        <th class="px-6 py-4 text-center">الهاتف</th>
+                        <th class="px-6 py-4 text-center">تاريخ الإرسال</th>
+                        <th class="px-6 py-4 text-center">الملف (CV)</th>
+                        <th class="px-6 py-4 text-center">إجراءات</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admin-submissions-tbody">
+                      <!-- Rendered dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER SECTION (frosted panel) -->
+  <footer class="glass border-t border-white/5 mt-auto relative z-10 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+      
+      <!-- Branding & Slogan -->
+      <div class="flex flex-col items-center space-y-2">
+        <div class="flex items-center gap-3">
+          <i class="fa-solid fa-brain text-neonCyan text-2xl"></i>
+          <span class="text-xl font-bold font-cairo bg-gradient-to-l from-white to-slate-200 bg-clip-text text-transparent">سمارت هورايزن</span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-500">نصنع برمجيات مبتكرة وحلول ذكية تدفع عقولنا نحو آفاق تكنولوجية مذهلة.</p>
+      </div>
+
+      <!-- Quick footer navigation -->
+      <div class="flex justify-center gap-6 text-sm text-slate-400 font-medium">
+        <a href="#home" class="hover:text-neonCyan transition-all">الرئيسية</a>
+        <a href="#projects" class="hover:text-neonCyan transition-all">مشاريعنا</a>
+        <a href="#team" class="hover:text-neonCyan transition-all">أعضاء فريقنا</a>
+        <a href="#roadmap" class="hover:text-neonCyan transition-all">رؤيتنا القادمة</a>
+        <a href="#join" class="hover:text-neonCyan transition-all">بوابة العمل</a>
+      </div>
+
+      <!-- Copyright notice and designer badge -->
+      <div class="pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+        <span>&copy; 2026 فريق سمارت هورايزن (Smart Horizon). جميع الحقوق محفوظة.</span>
+        <span class="flex items-center gap-1.5">
+          صنع بشغف وابتكار في العراق <i class="fa-solid fa-heart text-red-600 animate-pulse"></i>
+        </span>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ========================================== -->
+  <!-- MODAL POPUPS FOR DYNAMIC CRUD OPERATIONS -->
+  <!-- ========================================== -->
+
+  <!-- Modal backdrop overlay helper -->
+  <div id="modal-overlay" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 items-center justify-center p-4 hidden">
+    
+    <!-- 1. PROJECT CRUD MODAL -->
+    <div id="project-modal" class="glass-premium rounded-3xl w-full max-w-lg p-6 sm:p-8 border-white/10 text-start hidden shadow-2xl relative">
+      <div class="flex justify-between items-center pb-4 border-b border-white/5 mb-6">
+        <h4 id="project-modal-title" class="text-lg sm:text-xl font-bold font-cairo text-white">إضافة مشروع جديد</h4>
+        <button onclick="closeModal()" class="w-8 h-8 rounded-lg hover:bg-white/5 text-slate-400 hover:text-white flex items-center justify-center transition-all"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <form id="project-modal-form" class="space-y-4">
+        <input type="hidden" id="modal-project-id">
+        
+        <div class="flex flex-col space-y-1.5">
+          <label for="modal-project-title" class="text-xs font-semibold text-slate-300">عنوان المشروع <span class="text-red-500">*</span></label>
+          <input type="text" id="modal-project-title" required placeholder="مثال: منصة ريادة الأعمال العراقية"
+            class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-neonCyan text-white transition-all">
+        </div>
+
+        <div class="flex flex-col space-y-1.5">
+          <label for="modal-project-desc" class="text-xs font-semibold text-slate-300">وصف تفصيلي وموجز <span class="text-red-500">*</span></label>
+          <textarea id="modal-project-desc" required rows="4" placeholder="اكتب نبذة شاملة عن أهداف ونتائج ومميزات المشروع..."
+            class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-neonCyan text-white placeholder-slate-600 transition-all"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          
+          <div class="flex flex-col space-y-1.5 col-span-1">
+            <label class="text-xs font-semibold text-slate-300">صورة المشروع <span class="text-xs text-slate-500">(رفع ملف أو لصق رابط)</span></label>
+            <div class="flex gap-2">
+              <input type="text" id="modal-project-image" placeholder="رابط الصورة أو اختر ملفاً للرفع"
+                class="bg-slateDark/50 border border-white/10 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-neonCyan text-white transition-all text-start flex-grow" dir="ltr">
+              <button type="button" id="modal-project-upload-btn" onclick="document.getElementById('modal-project-file').click()"
+                class="px-3 py-2 rounded-xl bg-neonCyan/15 hover:bg-neonCyan/30 text-neonCyan border border-neonCyan/35 text-xs font-bold transition-all whitespace-nowrap">
+                <i class="fa-solid fa-cloud-arrow-up"></i> رفع
+              </button>
+              <input type="file" id="modal-project-file" class="hidden" accept=".jpg,.jpeg,.png,.gif,.webp">
+            </div>
+            <!-- Live Image Preview Container -->
+            <div id="project-image-preview-box" class="hidden mt-2 flex items-center gap-3 glass p-2 rounded-xl border-white/5 animate-fadeIn">
+              <div class="w-10 h-10 rounded-lg overflow-hidden border border-white/10">
+                <img id="project-image-preview" src="" alt="معاينة" class="w-full h-full object-cover">
+              </div>
+              <span id="project-upload-status-label" class="text-[10px] text-neonCyan font-mono">تم رفع الملف بنجاح!</span>
+            </div>
+          </div>
+
+          <div class="flex flex-col space-y-1.5">
+            <label for="modal-project-tags" class="text-xs font-semibold text-slate-300">العلامات (مفصولة بفاصلة)</label>
+            <input type="text" id="modal-project-tags" placeholder="ذكاء اصطناعي, React, روبوت"
+              class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-neonCyan text-white transition-all">
+          </div>
+
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl font-bold font-cairo bg-neonCyan text-slate-900 shadow-[0_0_15px_rgba(0,242,254,0.3)] hover:scale-[1.01] transition-all flex items-center justify-center gap-2">
+          <span id="project-modal-submit-label">حفظ وحفظ المشروع</span> <i class="fa-solid fa-save"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- 2. TEAM MEMBER CRUD MODAL -->
+    <div id="member-modal" class="glass-premium rounded-3xl w-full max-w-lg p-6 sm:p-8 border-white/10 text-start hidden shadow-2xl relative">
+      <div class="flex justify-between items-center pb-4 border-b border-white/5 mb-6">
+        <h4 id="member-modal-title" class="text-lg sm:text-xl font-bold font-cairo text-white">إضافة عضو فريق جديد</h4>
+        <button onclick="closeModal()" class="w-8 h-8 rounded-lg hover:bg-white/5 text-slate-400 hover:text-white flex items-center justify-center transition-all"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <form id="member-modal-form" class="space-y-4">
+        <input type="hidden" id="modal-member-id">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="flex flex-col space-y-1.5">
+            <label for="modal-member-name" class="text-xs font-semibold text-slate-300">الاسم الكامل للعضو <span class="text-red-500">*</span></label>
+            <input type="text" id="modal-member-name" required placeholder="مثال: د. يوسف الحمداني"
+              class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-neonCyan text-white transition-all">
+          </div>
+
+          <div class="flex flex-col space-y-1.5">
+            <label for="modal-member-role" class="text-xs font-semibold text-slate-300">الدور الوظيفي والتقني <span class="text-red-500">*</span></label>
+            <input type="text" id="modal-member-role" required placeholder="مهندس رؤية حاسوب"
+              class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-neonCyan text-white transition-all">
+          </div>
+        </div>
+
+        <div class="flex flex-col space-y-1.5">
+          <label for="modal-member-bio" class="text-xs font-semibold text-slate-300">نبذة علمية ومهنية موجزة <span class="text-red-500">*</span></label>
+          <textarea id="modal-member-bio" required rows="3" placeholder="مطور محترف مهتم بحلول الخوارزميات وتأمين النماذج..."
+            class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-neonCyan text-white placeholder-slate-600 transition-all"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="flex flex-col space-y-1.5">
+            <label class="text-xs font-semibold text-slate-300">الصورة الشخصية <span class="text-xs text-slate-500">(رفع ملف أو لصق رابط)</span></label>
+            <div class="flex gap-2">
+              <input type="file" id="modal-member-file" class="hidden" accept=".jpg,.jpeg,.png,.gif,.webp">
+              <input type="text" id="modal-member-image" placeholder="رابط الصورة أو اختر ملفاً للرفع" class="bg-slateDark/50 border border-white/10 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-neonCyan text-white transition-all text-start flex-grow" dir="ltr">
+              <button type="button" id="modal-member-upload-btn" onclick="document.getElementById('modal-member-file').click()"
+                class="px-3 py-2 rounded-xl bg-neonBlue/15 hover:bg-neonBlue/30 text-neonBlue border border-neonBlue/35 text-xs font-bold transition-all whitespace-nowrap">
+                <i class="fa-solid fa-cloud-arrow-up"></i> رفع
+              </button>
+            </div>
+            <!-- Live Image Preview Container -->
+            <div id="member-image-preview-box" class="hidden mt-2 flex items-center gap-3 glass p-2 rounded-xl border-white/5 animate-fadeIn">
+              <div class="w-10 h-10 rounded-lg overflow-hidden border border-white/10">
+                <img id="member-image-preview" src="" alt="معاينة" class="w-full h-full object-cover">
+              </div>
+              <span id="member-upload-status-label" class="text-[10px] text-neonBlue font-mono">تم رفع الملف بنجاح!</span>
+            </div>
+          </div>
+
+          <div class="flex flex-col space-y-1.5">
+            <label for="modal-member-skills" class="text-xs font-semibold text-slate-300">المهارات المتميزة (مفصولة بفاصلة)</label>
+            <input type="text" id="modal-member-skills" placeholder="Docker, Python, OpenCV"
+              class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-neonCyan text-white transition-all">
+          </div>
+        </div>
+
+        <div class="flex flex-col space-y-1.5">
+          <label for="modal-member-order" class="text-xs font-semibold text-slate-300">ترتيب الظهور في الشبكة</label>
+          <input type="number" id="modal-member-order" placeholder="1" min="1"
+            class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-neonCyan text-white transition-all">
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl font-bold font-cairo bg-neonBlue text-white shadow-[0_0_15px_rgba(79,172,254,0.3)] hover:scale-[1.01] transition-all flex items-center justify-center gap-2">
+          <span id="member-modal-submit-label">حفظ وحفظ العضو</span> <i class="fa-solid fa-save"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- 3. ROADMAP IDEA CRUD MODAL -->
+    <div id="idea-modal" class="glass-premium rounded-3xl w-full max-w-lg p-6 sm:p-8 border-white/10 text-start hidden shadow-2xl relative">
+      <div class="flex justify-between items-center pb-4 border-b border-white/5 mb-6">
+        <h4 id="idea-modal-title" class="text-lg sm:text-xl font-bold font-cairo text-white">إضافة فكرة مستقبلية جديدة</h4>
+        <button onclick="closeModal()" class="w-8 h-8 rounded-lg hover:bg-white/5 text-slate-400 hover:text-white flex items-center justify-center transition-all"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <form id="idea-modal-form" class="space-y-4">
+        <input type="hidden" id="modal-idea-id">
+
+        <div class="flex flex-col space-y-1.5">
+          <label for="modal-idea-title" class="text-xs font-semibold text-slate-300">عنوان الفكرة / الابتكار <span class="text-red-500">*</span></label>
+          <input type="text" id="modal-idea-title" required placeholder="مثال: منصة التحليل الزراعي المائي"
+            class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-neonCyan text-white transition-all">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="flex flex-col space-y-1.5">
+            <label for="modal-idea-quarter" class="text-xs font-semibold text-slate-300">الربع السنوي للتطوير <span class="text-red-500">*</span></label>
+            <input type="text" id="modal-idea-quarter" required placeholder="الربع الثالث 2026"
+              class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-neonCyan text-white transition-all">
+          </div>
+
+          <div class="flex flex-col space-y-1.5">
+            <label for="modal-idea-status" class="text-xs font-semibold text-slate-300">حالة التخطيط والتحضير</label>
+            <input type="text" id="modal-idea-status" placeholder="مثال: البحث والتحضير"
+              class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-neonCyan text-white transition-all">
+          </div>
+        </div>
+
+        <div class="flex flex-col space-y-1.5">
+          <label for="modal-idea-desc" class="text-xs font-semibold text-slate-300">وصف الفكرة والأثر الاجتماعي والتقني المتوقع <span class="text-red-500">*</span></label>
+          <textarea id="modal-idea-desc" required rows="4" placeholder="اشرح كيف ستعالج هذه الفكرة عقبة واقعية أو تؤثر إيجاباً..."
+            class="bg-slateDark/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-neonCyan text-white placeholder-slate-600 transition-all"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl font-bold font-cairo bg-neonEmerald text-slate-900 shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:scale-[1.01] transition-all flex items-center justify-center gap-2">
+          <span id="idea-modal-submit-label">حفظ وحفظ الفكرة</span> <i class="fa-solid fa-save"></i>
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- Loading Screen overlay -->
+  <div id="global-loader" class="fixed inset-0 bg-obsidian z-50 flex flex-col items-center justify-center space-y-4">
+    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-neonCyan to-neonBlue flex items-center justify-center shadow-[0_0_30px_rgba(0,242,254,0.4)] animate-spin" style="animation-duration: 2.5s;">
+      <i class="fa-solid fa-brain text-white text-2xl"></i>
+    </div>
+    <div class="flex flex-col items-center space-y-1">
+      <span class="text-lg font-bold font-cairo text-white tracking-wide">جاري الاتصال بالسحابة الذكية...</span>
+      <span class="text-[10px] text-neonCyan font-mono uppercase tracking-[0.2em] font-bold">Smart Horizon AI Engine</span>
+    </div>
+  </div>
+
+  <!-- Custom Javascript application module -->
+  <script src="/app.js"></script>
+</body>
+</html>

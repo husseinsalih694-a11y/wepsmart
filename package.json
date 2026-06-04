@@ -1,0 +1,27 @@
+{
+  "name": "smart-horizon-website",
+  "version": "1.0.0",
+  "description": "Premium Arabic Website for Smart Horizon AI & Software Development Team",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "express",
+    "arabic",
+    "premium",
+    "ai-team",
+    "tailwind"
+  ],
+  "author": "Smart Horizon Team",
+  "license": "ISC",
+  "dependencies": {
+    "cloudinary": "^2.10.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2",
+    "mongoose": "^9.6.3",
+    "multer": "^1.4.5-lts.1"
+  }
+}
